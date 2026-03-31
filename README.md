@@ -15,33 +15,28 @@ Derek Quinlan - [@derekq111](https://github.com/derekq111)
 
 Regan Taylor - [@nrt19057](https://github.com/nrt19057)
 ## Problem Description
-Our data model is for a fictional company called "Terry Teas" the company is a tea shop selling nutrition teas. The database is for the day to day operation of the company. The database includes tables such as Customers, Orders, OrderDetails, LoyaltyPrograms, etc. Our database would help a manager visualise simple things such as listing all customer names, or a more complex query such as total quantity sold for each product. 
+  Our group handled the task of creating a data model for our franchise "Loaded Tea" company. Our business is operated in variious locations around the US, each with their own employees lead by department chairs in Human Resources and Franchise Coordination. Additionally, our model accounts for the unformation stored on the customers at each location, their eligibility for military and student discounts, and the supplier-to-business coordination of supply orders aside from those purchases made directly from the location by the customer. Our overarching goals of this project were to accurately display each relationship between entities, create sample data tables for each entity and its attributes, and finally test out various queries relevant tov the business operations of our organization.
 
 ## Data Model
 <img width="1060" height="413" alt="Screenshot 2026-03-29 at 4 11 20 PM" src="https://github.com/user-attachments/assets/47a9a5a7-d151-457f-a64f-f658ee9c2f93" />
 
-Explanation of Data Model:
-Our data model represents the structure of a retail and inventory management system that tracks customers, sales, products, suppliers, employees, and store operations.
+# Data Model:
+  Our data model focuses on a Loaded Tea company that functions as a franchise with many different locations across the United States. We started with our customer entity, indicating all of the relevant data stored on our customers ranging from atibutes of name, address, and contact information. For each customer, there are many sales, which we indicated through a one to many relationship with our sales entity. 
+  
+  The Sales entity displays data on the date, price and the payment method chosen by the customer for each sale. Additionally, the Sales entity contains two foreign keys- CustomerID and ProgramID- to represent the customers making each sale and whether they qualified for any discount programs (Military or Student). This then brings is to the Discount Programs table, which contains the program name and the percentage discount for each program offered for each. In this scenario, our company only offers Military and Student discounts, with military granting a 30% decrease in prices and Student granting a 20% decrease. For the sake of the complexity of our data model, we assume that all customers' sales will apply for one of these discounts. This Discount Program table also connects to the customers table as each customer can qualify for many discount programs in a one-to-many relationship.
+  
+  Similar to the relationship between sales and customers, Customer Orders and Customers also experience a one-to-many relationship as each customer can have many orders, but each order can only belong to one customer. This entity is differentiated from the sales table as those purchases were made online rather than at a specific franchise location. As an individual entity, Customer Orders stores the monetary amount of each order and the date the order was placed. 
 
-At the core of the model is the Customers entity, which stores personal information such as name, contact details, and address. Each customer can make multiple purchases, which is why there is a one-to-many relationship between the Customers and Sales entities.
+  Considering that many orders can contain many products, we developed the associative identity labeled Customer Order Details to indicate this relationship between Customer Orders and Products. In this entity, we have the product ID and order ID for each, as well as the shipping date, status of the order, price, and quantity of items in the order. For the sake of this data model, we assume that the customer orders all have a scheduled date of which they will be shipped out, even if they are still being processed and have not yet shipped. We also assume that orders which are cancelled will not appear in the table any longer, and that customers are limited to the purchase of 20 items when choosing to by online instead of in person.
+  
+  Next is our product entity which keeps track of the different flavors and types of drinks offered by our company, specifically either Loaded Teas or Beauty Shakes in various fruity flavors. This table indicates a many-to-many relationship with the sales table as many sales can contain many different products, and vice versa. This relationship is held together by an associative identity labeled product line. This entity is non-identifiable and serves as a holding place for each identifiable entity's foreign keys.
 
-The Sales entity records each transaction, including the sale price, date, and payment method. Because a single sale can involve multiple products, we created an associative entity called Product Line, which connects Sales and Products. This resolves the many-to-many relationship between Sales and Products, allowing each sale to include multiple products and each product to appear in multiple sales.
+  Many products in the product entity can also go to many store locations, hence the many-to-many connection between Store Location and Products.  The Store Locations entity is comprised of attributes including each store's area code, city, and state. This entity is also connected with the Employees table signifying that many employees can work at one store location, while each employee can only work at one location. 
+  
+  Together these two tables form the associative identity labeled "Supplier Orders", which contains the foreign keys of each individual entity with no other salient attributes. For completeness, we specify Supplier Orders as to differentiate from orders placed by the customers that come directly from the stock at the store locations versus the franchises purchasing more inventory to sell to customers. But the supplies in these orders must come from a home base, which brings us to our Supplier entity containing individual supplier IDs for each company, as well as their company name.
 
-The Products entity stores details about each item, including product name and type. Products are supplied by vendors, which is represented through the Suppliers entity. Since suppliers can provide multiple products and products can come from multiple suppliers, we use the Supplier Orders associative entity to connect Suppliers and Products. This table also links to Store Location, indicating where products are being delivered.
+  Last, the Employees entity is the most complex of our entities, containing information on each employee's name, email, department name, and foreign keys identifying their respective store location and department chair. The department chair identifier is represented by a one-to-many recursive relationship, as one department chair can observe many employees.
 
-The Store Location entity represents different store branches, including attributes such as city and state. Supplier Orders are tied to specific locations, establishing a one-to-many relationship between Store Location and Supplier Orders.
-
-Customer purchasing activity is further detailed through the Customer Orders and Customer Order Details entities. Customer Orders represent overall orders placed by customers, while Customer Order Details break down each order into specific products, quantities, shipping dates, and statuses. This creates a structured relationship where:
-- One customer can have many orders
-- One order can have many order details (products)
-
-To manage promotions, we included a Discount Programs entity. This entity links customers, sales, and specific discount programs, allowing discounts to be applied to particular transactions. This creates relationships between Customers, Sales, and Discount Programs to track promotional usage.
-
-On the organizational side, the Employees entity stores employee information such as name, email, and department. Each employee belongs to a Department, forming a many-to-one relationship (many employees per department). Additionally, the Employees table includes a self-referencing relationship (via PreviousChair), which models succession or reporting structure within the organization.
-
-Finally, the Department entity defines different functional areas within the company, such as sales, management, or operations.
-
-Overall, this data model efficiently captures the relationships between customers, transactions, products, suppliers, and employees, while resolving complex many-to-many relationships through associative entities like Product Line, Supplier Orders, and Customer Order Details.
 ## Data Dictionary
 <img width="641" height="496" alt="Screenshot 2026-03-29 at 4 27 11 PM" src="https://github.com/user-attachments/assets/87ed6a7b-8bb0-4e4d-9598-0fc36a83eaca" />
 
