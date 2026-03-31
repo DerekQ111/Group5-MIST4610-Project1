@@ -167,7 +167,7 @@ Managerial Relevance: Managers can identify underperforming products relative to
 
 SELECT c.customerID, c.firstName, c.lastName, SUM(o.amount) AS total_customer_spent FROM Customers c JOIN Orders o ON c.customerID = o.customerID GROUP BY c.customerID, c.firstName, c.lastName HAVING SUM(o.amount) > ( SELECT AVG(amount) FROM Orders ) ORDER BY total_customer_spent DESC;
 
-Query Response:<img width="536" height="279" alt="Q9" src="https://github.com/user-attachments/assets/ab2af1ba-c118-4e59-8a06-9dce792da22f" />
+Query Response: <img width="536" height="279" alt="Q9" src="https://github.com/user-attachments/assets/ab2af1ba-c118-4e59-8a06-9dce792da22f" />
 
 
 Natural Language Description: This query calculates total spending per customer and uses a subquery with AVG to filter customers whose total exceeds the average order amount. It also uses HAVING.
